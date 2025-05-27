@@ -11,7 +11,7 @@ Aurora Core is a locally hosted multi-model AI platform built for the NVIDIA Age
 
 ## 💬 Features
 
-* **Chat Interface** – Chat with Mistral, OpenHermes, or both using Guardian critique.
+* **Chat Interface** – Chat with Mistral, OpenHermes, or FuseCore using Guardian critique.
 * **FuseCore Mode** – Get the most logical fusion of multiple LLM outputs.
 * **Stable Diffusion Image Generator** – Select a style and prompt to create images.
 * **Live Web Researcher** – Powered by NVIDIA AgentIQ to retrieve real-time info.
@@ -26,12 +26,12 @@ To run Aurora Core successfully, you must download **three** `.gguf` models and 
 
 1. **Mistral-7B-Instruct GGUF**
    🔗 [Download from TheBloke on Hugging Face](https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF)
-   ⬇️ File needed: `mistral-7b-instruct-v0.1.Q5_K_M.gguf`
+   ⬇️ File needed: `mistral-7b-instruct-v0.1.Q5_K_M.gguf` (Q5\_K\_M recommended for balance of speed and accuracy)
    📁 Place in: `models/`
 
 2. **OpenHermes-2.5-Mistral GGUF**
    🔗 [Download from TheBloke on Hugging Face](https://huggingface.co/TheBloke/OpenHermes-2.5-Mistral-7B-GGUF)
-   ⬇️ File needed: `openhermes-2.5-mistral-7b.Q4_K_M.gguf`
+   ⬇️ File needed: `openhermes-2.5-mistral-7b.Q4_K_M.gguf` (Q4\_K\_M recommended)
    📁 Place in: `models/`
 
    ⚠️ **Important:** Rename the file to:
@@ -40,9 +40,9 @@ To run Aurora Core successfully, you must download **three** `.gguf` models and 
    openhermes-2.5-mistral-7b.Q4_K_M.gguf
    ```
 
-3. **Guardian AI - Zephyr GGUF** (used for critique in FuseCore mode)
+3. **Guardian AI - Zephyr GGUF** (used only for critique in FuseCore mode)
    🔗 [Download Zephyr model (e.g. Zephyr 7B-beta Q4\_K\_M)](https://huggingface.co/TheBloke/zephyr-7B-beta-GGUF)
-   ⬇️ File needed: `zephyr-7b-beta.Q4_K_M.gguf`
+   ⬇️ File needed: `zephyr-7b-beta.Q4_K_M.gguf` (Q4\_K\_M recommended)
    📁 Place in: `models/`
 
    ⚠️ **Important:** Rename the file to:
@@ -106,3 +106,4 @@ This project is for the NVIDIA Agent Toolkit Hackathon 2025. All rights reserved
 ## 👤 Author
 
 Built by Noah Ogle.
+
