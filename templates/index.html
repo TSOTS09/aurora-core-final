@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurora Core</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0a0f2c] text-white font-sans">
+  <header class="bg-[#0d132e] border-b border-[#1a1f3c] shadow-md">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+      <div class="flex items-center space-x-3">
+        <img src="{{ url_for('static', filename='aurora_logo.png') }}" alt="Aurora Core Logo" class="h-12 w-auto rounded-full" />
+        <h1 class="text-2xl font-bold text-[#76B900]">Aurora Core</h1>
+      </div>
+      <nav class="space-x-6 text-sm">
+        <button onclick="navigateTo('chat')" class="tab-btn" data-tab="chat">Chat</button>
+        <button onclick="navigateTo('imagegen')" class="tab-btn" data-tab="imagegen">Image Gen</button>
+        <button onclick="navigateTo('agent')" class="tab-btn" data-tab="agent">Research Agent</button>
+        <button onclick="navigateTo('docs')" class="tab-btn" data-tab="docs">Docs</button>
+        <button onclick="navigateTo('about')" class="tab-btn" data-tab="about">About</button>
+
+      </nav>
+    </div>
+  </header>
+
+  <!-- Home Section -->
+  <main id="home" class="max-w-3xl mx-auto py-20 px-4">
+    <h2 class="text-4xl font-bold text-center text-[#76B900] mb-6">Welcome to Aurora Core</h2>
+    <p class="text-gray-200 text-center text-lg mb-10">Select from advanced models to generate intelligent responses or creative images—powered by Aurora Core</p>
+    <div class="flex justify-center">
+      <button onclick="navigateTo('chat')" class="bg-[#76B900] hover:bg-[#5b8c00] text-white font-semibold px-6 py-3 rounded-xl">
+        Start a Chat
+      </button>
+    </div>
+  </main>
+
+  <!-- Chat Section -->
+  <main id="chat" class="hidden max-w-3xl mx-auto py-12 px-4">
+    <h2 class="text-3xl font-semibold text-[#76B900] mb-6">Model Selector</h2>
+    <div class="flex space-x-4 mb-4">
+  <div class="flex flex-col space-y-2">
+  <div>
+    <button class="tab-btn tab-btn-active" data-model="mistral">Mistral-7B-Instruct</button>
+    <small class="text-gray-400 ml-2">Fast and general-purpose</small>
+  </div>
+  <div>
+    <button class="tab-btn" data-model="openhermes">OpenHermes-2.5</button>
+    <small class="text-gray-400 ml-2">Creative and expressive</small>
+  </div>
+  <div>
+  </div>
+  <div>
+    <button class="tab-btn" data-model="fusecore">FuseCore (All)</button>
+    <small class="text-gray-400 ml-2">Fused response + AI critique</small>
+  </div>
+<div style="background-color: #332b00; color: #ffdf80; padding: 10px; margin-top: 15px; border-radius: 8px;">
+  ⚠️ If the response seems incomplete or doesn’t show up correctly, try submitting the prompt again.
+</div>
+
+  <h2 class="text-xl font-semibold">Chat History</h2>
+<button onclick="clearChatHistory()" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded mt-2 mb-4">
+  Clear History
+</button>
+<ul id="historyList"></ul>
+</div>
+
+</div>
+
+<div id="chatHistory" class="mt-8 space-y-2 text-sm text-gray-300">
+  <h2 class="text-xl font-semibold">Chat History</h2>
+  <ul id="historyList"></ul>
+</div>
+
+    <form id="chatForm" class="mb-10">
+      <textarea rows="4" placeholder="Enter your prompt here..." class="w-full p-4 rounded-lg text-black"></textarea>
+      <button type="submit" class="bg-[#76B900] hover:bg-[#5b8c00] text-white font-semibold px-6 py-2 mt-2 rounded-lg">Submit</button>
+    </form>
+
+    <div id="responseArea" class="space-y-4">
+      <!-- Model responses will be inserted here -->
+    </div>
+  </main>
+
+  <!-- Image Generation Section -->
+  <main id="imagegen" class="hidden max-w-3xl mx-auto py-12 px-4">
+    <h2 class="text-3xl font-semibold text-[#76B900] mb-6">Image Generator</h2>
+    <form id="imageForm" class="space-y-4">
+      <input type="text" id="imagePrompt" placeholder="Describe the image (e.g., RTX 5090 on a boat)..." class="w-full p-3 rounded-lg text-black" />
+      <select id="imageStyle" class="w-full p-3 rounded-lg text-black mt-2">
+        <option value="realistic">Realistic</option>
+        <option value="painterly">Painterly</option>
+      </select>
+      <button type="submit" class="bg-[#76B900] hover:bg-[#5b8c00] text-white font-semibold px-4 py-2 rounded">
+        Generate Image
+      </button>
+    </form>
+    <div id="imageResult" class="mt-6">
+      <!-- Generated image will appear here -->
+    </div>
+  </main>
+
+<!-- About Section -->
+<div id="about" class="hidden max-w-3xl mx-auto py-12 px-4">
+  <h2 class="text-2xl font-bold text-green-400 mb-4">About Aurora Core</h2>
+  <p class="text-gray-200 leading-relaxed">
+    Aurora Core is a multi-agent LLM orchestration platform powered by local models and built to scale on NVIDIA GPUs. Created for the NVIDIA Agent Toolkit Hackathon, it integrates image generation, model switching, and research tools in one seamless UI.
+  </p>
+</div>
+
+<!-- Docs Section -->
+<div id="docs" class="hidden max-w-3xl mx-auto py-12 px-4">
+  <h2 class="text-2xl font-bold text-green-400 mb-4">Developer Docs</h2>
+  <ul class="list-disc text-gray-200 pl-6 space-y-2">
+    <li>To run locally, install Python 3.10+, `pip install -r requirements.txt`, and run `app.py`</li>
+    <li>Image generation uses `diffusers` and a local GPU if available</li>
+    <li>Chat uses multiple local LLMs via llama.cpp integration</li>
+    <li>Research Agent uses DuckDuckGo search with custom formatting</li>
+    <li>All results are dynamically loaded without refreshing the page</li>
+  </ul>
+</div>
+
+
+  <footer class="text-center text-gray-500 text-sm py-6 border-t border-[#1a1f3c] mt-20">
+    © 2025 Aurora Core. All rights reserved. <span class="text-[#76B900]">Powered by NVIDIA</span>
+  </footer>
+  
+  <main id="agent" class="hidden max-w-3xl mx-auto py-12 px-4">
+  <h2 class="text-3xl font-semibold text-[#76B900] mb-6">Researcher Agent</h2>
+  <input type="text" id="agentQuery" placeholder="Ask the Researcher Agent..." class="w-full p-4 rounded-lg text-black mb-4" />
+  <button onclick="askResearcherAgent()" class="bg-[#76B900] hover:bg-[#5b8c00] text-white font-semibold px-6 py-2 rounded-lg">Ask</button>
+  <pre id="agentResponse" class="mt-4 text-gray-200 whitespace-pre-line"></pre>
+</main>
+
+  <script>
+    function navigateTo(page) {
+  ["home", "chat", "imagegen", "agent", "about", "docs"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+  document.getElementById(page).classList.remove("hidden");
+}
+// Update tab highlight
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  });
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        tabButtons.forEach((b) => b.classList.remove("active-tab"));
+        btn.classList.add("active-tab");
+      });
+    });
+
+    const chatForm = document.getElementById("chatForm");
+    const responseArea = document.getElementById("responseArea");
+
+   chatForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const prompt = chatForm.querySelector("textarea").value.trim();
+  const activeModelBtn = document.querySelector(".tab-btn.active-tab");
+  const selectedModel = activeModelBtn ? activeModelBtn.dataset.model : null;
+  if (!prompt || !selectedModel) return;
+
+  responseArea.innerHTML = `<p class="text-gray-400">Processing... <span class="animate-pulse">⏳</span></p>`;
+
+  try {
+    const res = await fetch("/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt, model: selectedModel }),
+    });
+
+    const data = await res.json();
+    const output = data.response || "⚠️ No response";
+
+    responseArea.innerHTML = `
+      <div class="bg-[#121937] border border-[#263166] rounded-lg p-4">
+        <h3 class="text-[#76B900] font-semibold mb-2">${selectedModel} Says:</h3>
+        <p class="text-gray-200 whitespace-pre-line">${output}</p>
+        <p class="text-xs text-gray-400 mt-2">Generated live using Aurora Core.</p>
+      </div>`;
+  } catch (err) {
+    responseArea.innerHTML = "<p class='text-red-500'>Something went wrong.</p>";
+  }
+});
+
+    const imageForm = document.getElementById("imageForm");
+    const imageResult = document.getElementById("imageResult");
+
+    imageForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const prompt = document.getElementById("imagePrompt").value.trim();
+      const style = document.getElementById("imageStyle").value;
+      if (!prompt) return;
+
+      imageResult.innerHTML = `<p class="text-gray-400">Generating image... <span class="animate-pulse">⏳</span></p>`;
+
+      try {
+        const res = await fetch("http://127.0.0.1:5000/generate-image", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt, style }),
+        });
+        const data = await res.json();
+        const url = data.url;
+
+        imageResult.innerHTML = `
+          <img src="${url}" alt="Generated Image" class="mt-4 rounded shadow-lg max-w-full" />
+          <p class="text-xs text-gray-400 mt-2">Powered by Stable Diffusion 1.5.</p>
+        `;
+      } catch (err) {
+        imageResult.innerHTML = "<p class='text-red-500'>Image generation failed.</p>";
+      }
+    });
+
+   async function askResearcherAgent() {
+     const input = document.getElementById("agentQuery").value.trim();
+    if (!input) return;
+
+  document.getElementById("agentResponse").innerText = "Thinking... ⏳";
+
+  const res = await fetch("/ask-agent", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query: input })
+  });
+
+  const data = await res.json();
+  document.getElementById("agentResponse").innerHTML = (data.response || data.error)
+  .split('\n')
+  .map(line => {
+    const parts = line.split(' — ');
+    if (parts.length === 2) {
+      return `<p><strong>${parts[0]}</strong>: <a href="${parts[1]}" target="_blank" class="text-blue-400 hover:underline">${parts[1]}</a></p>`;
+    }
+    return `<p>${line}</p>`;
+  })
+  .join('');
+}
+</script>
+
+  </script>
+
+{% if result %}
+  <div class="mt-6 bg-gray-800 p-4 rounded-lg shadow text-white max-w-2xl">
+    <h3 class="text-lg font-semibold">Answer:</h3>
+    <p>{{ result }}</p>
+  </div>
+{% endif %}
+
+<script>
+async function loadChatHistory() {
+  const res = await fetch("/chat-history");
+  const data = await res.json();
+  const list = document.getElementById("historyList");
+  list.innerHTML = ""; // Clear current list
+
+  if (data.history && data.history.length > 0) {
+    data.history.forEach(entry => {
+      const item = document.createElement("li");
+      item.innerHTML = `<strong>${entry.model}</strong>: ${entry.prompt} <br><em>${entry.response}</em>`;
+      list.appendChild(item);
+    });
+  } else {
+    list.innerHTML = "<li>No history found.</li>";
+  }
+}
+
+async function clearChatHistory() {
+  const res = await fetch("/clear-history", { method: "POST" });
+  const data = await res.json();
+  if (data.status === "success") {
+    document.getElementById("historyList").innerHTML = "<li>No history found.</li>";
+  }
+}
+
+
+
+
+</script>
+
+<script>
+  window.onload = loadChatHistory;
+</script>
+
+
+
+
+  <style>
+    .tab-btn {
+      background-color: #121937;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      border: 1px solid #263166;
+      transition: 0.3s;
+    }
+    .tab-btn:hover {
+      background-color: #1b2653;
+      color: #76B900;
+    }
+    .active-tab {
+      background-color: #76B900;
+      color: white;
+    }
+  </style>
+</body>
+</html>
