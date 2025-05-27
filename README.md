@@ -74,6 +74,13 @@ aurora_core_backup/
 * `flask`, `requests`, `datetime`
 * Your own local `.gguf` models in the `models` folder
 
+📦 You will also need to download and install the following project dependencies manually:
+
+* [AgentIQ (Official NVIDIA GitHub)](https://github.com/NVIDIA/AgentIQ)
+* [llama.cpp (Hugging Face or GitHub build)](https://github.com/ggerganov/llama.cpp)
+
+Place them in folders `AgentIQ/` and `llama.cpp/` respectively within the root directory.
+
 ### How to Run
 
 ```bash
@@ -95,3 +102,4 @@ This project is for the NVIDIA Agent Toolkit Hackathon 2025. All rights reserved
 ## 👤 Author
 
 Built by Noah Ogle.
+
