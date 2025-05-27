@@ -30,7 +30,7 @@ To run Aurora Core successfully, you must download **three** `.gguf` models and 
    📁 Place in: `models/`
 
 2. **OpenHermes-2.5-Mistral GGUF**
-   🔗 [Download from TheBloke on Hugging Face](https://huggingface.co/TheBloke/OpenHermes-2.5-Mistral-GGUF)
+   🔗 [Download from TheBloke on Hugging Face](https://huggingface.co/TheBloke/OpenHermes-2.5-Mistral-7B-GGUF)
    ⬇️ File needed: `openhermes-2.5-mistral-7b.Q4_K_M.gguf`
    📁 Place in: `models/`
 
@@ -61,6 +61,8 @@ aurora_core_backup/
 │   ├── mistral-7b-instruct-v0.1.Q5_K_M.gguf
 │   ├── openhermes-2.5-mistral-7b.Q4_K_M.gguf
 │   └── guardian_zephyr.gguf
+├── llama.cpp/
+├── AgentIQ/
 ```
 
 ---
@@ -77,7 +79,7 @@ aurora_core_backup/
 📦 You will also need to download and install the following project dependencies manually:
 
 * [AgentIQ (Official NVIDIA GitHub)](https://github.com/NVIDIA/AgentIQ)
-* [llama.cpp (Hugging Face or GitHub build)](https://github.com/ggerganov/llama.cpp)
+* [llama.cpp (GitHub)](https://github.com/ggerganov/llama.cpp)
 
 Place them in folders `AgentIQ/` and `llama.cpp/` respectively within the root directory.
 
@@ -93,6 +95,8 @@ python app.py
 
 📁 Google Drive Backup Folder: [AuroraCore-Final Submission Files](https://drive.google.com/drive/folders/1MAyhTnDcFe6ZaJTgdmzi4ItYP5XH0Jps?usp=drive_link)
 
+🛠 If a response seems incomplete or doesn't load correctly in the chat UI, please try submitting the prompt again.
+
 ---
 
 ## 📟 License
@@ -102,4 +106,3 @@ This project is for the NVIDIA Agent Toolkit Hackathon 2025. All rights reserved
 ## 👤 Author
 
 Built by Noah Ogle.
-
